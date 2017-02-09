@@ -48,7 +48,14 @@ function Invoke-AppveyorInstallTask
                               -ChildPath 'nuget.exe'
     Install-NugetExe -OutFile $nugetExePath
 
-    Install-Module -Name Pester -Force
+    if ($PesterMaximumVersion)
+    {
+        Install-Module -Name Pester -MaximumVersion $PesterMaximumVersion -Force
+    }
+    else
+    {
+        Install-Module -Name Pester -Force
+    }
 
     # Execute the custom install task if defined
     if ($customTaskModuleLoaded `
